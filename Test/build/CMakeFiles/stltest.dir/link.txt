@@ -1,0 +1,1 @@
+/usr/bin/c++    -rdynamic CMakeFiles/stltest.dir/test_my.o  -o ../bin/stltest 

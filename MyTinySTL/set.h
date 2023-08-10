@@ -40,6 +40,9 @@ public:
     typedef typename base_type::const_pointer const_pointer;
     typedef typename base_type::const_reference reference;
     typedef typename base_type::const_reference const_reference;
+    // 注意上一行，iterator定义为 RB-tree 的const_iterator，
+    // 这表示set迭代器无法执行写入操作。
+    // 这是因为set 的元素有一定次序安排不允许用户在任意处进行写入操作
     typedef typename base_type::const_iterator iterator;
     typedef typename base_type::const_iterator const_iterator;
     typedef typename base_type::const_reverse_iterator reverse_iterator;
@@ -52,6 +55,10 @@ public:
     // 构造、复制、移动函数
     set() = default;
 
+    // allocation / deallocation
+    // 注意, set一定使用RB-tree 的 insert_unique()而非insert_equal ()
+    // multiset 才使用RB-tree 的insert_equal ()
+    // 因为set不允许相同键值存在，multiset才允许相同键值存在
     template <class InputIterator>
     set(InputIterator first, InputIterator last) : tree_() {
         tree_.insert_unique(first, last);

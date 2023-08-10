@@ -30,6 +30,7 @@ void construct(Ty* ptr) {
     ::new ((void*)ptr) Ty();
 }
 
+// construct调用的是placement new, 在一个已经获得的内存里建立一个对象。
 template <class Ty1, class Ty2>
 void construct(Ty1* ptr, const Ty2& value) {
     ::new ((void*)ptr) Ty1(value);

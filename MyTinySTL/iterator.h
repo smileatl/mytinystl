@@ -17,17 +17,18 @@ struct bidirectional_iterator_tag : public forward_iterator_tag {};
 struct random_access_iterator_tag : public bidirectional_iterator_tag {};
 
 // iterator模板
+// 为了避免写代码的时候遗漏，最好继承此类
 template <class Category,
           class T,
           class Distance = ptrdiff_t,
           class Pointer = T*,
           class Reference = T&>
 struct iterator {
-    typedef Category iterator_category;
-    typedef T value_type;
-    typedef Pointer pointer;
-    typedef Reference reference;
-    typedef Distance difference_type;
+    typedef Category iterator_category;  // 迭代器类型
+    typedef T value_type;                // 迭代器所指对象类型
+    typedef Pointer pointer;             // 迭代器所指对象的类型指针
+    typedef Reference reference;         // 迭代器所指对象的类型引用
+    typedef Distance difference_type;    // 两个迭代器之间的距离
 };
 
 // iterator traits
@@ -112,7 +113,7 @@ struct iterator_traits
     : public iterator_traits_helper<Iterator,
                                     has_iterator_cat<Iterator>::value> {};
 
-// 针对原生指针的偏特化版本
+// 针对原生指针 T* 生成的 traits 偏特化版本
 template <class T>
 struct iterator_traits<T*> {
     typedef random_access_iterator_tag iterator_category;
@@ -122,6 +123,7 @@ struct iterator_traits<T*> {
     typedef ptrdiff_t difference_type;
 };
 
+// 针对原生指针 const T* 生成的 traits 偏特化
 template <class T>
 struct iterator_traits<const T*> {
     typedef random_access_iterator_tag iterator_category;

@@ -1,31 +1,21 @@
 #include <iostream>
-#include <string>
-using namespace std;
-class ADT{
-	int i;
-	int j;
-public:
-	ADT(){
-		i = 10;
-		j = 100;
-		cout << "ADT construct i=" << i << "j="<<j <<endl;
-	}
-	~ADT(){
-		cout << "ADT destruct" << endl;
-	}
-};
-int main()
-{
-	char *p = new(nothrow) char[sizeof (ADT) + 1];
-	if (p == NULL) {
-		cout << "alloc failed" << endl;
-	}
-	ADT *q = new(p) ADT;  //placement new:不必担心失败，只要p所指对象的的空间足够ADT创建即可
-	delete q;//错误!不能在此处调用delete q;
-	// q->~ADT();
-	delete[] p;
-	return 0;
+
+void modifyValue(int& ref) {
+    ref = 100;  // 修改绑定对象的值
 }
-//输出结果：
-//ADT construct i=10j=100
-//ADT destruct
+
+void printValue(const int& ref) {
+    std::cout << ref << std::endl;  // 读取绑定对象的值
+}
+
+int main() {
+    int x = 42;
+
+    modifyValue(x);  // 使用左值引用修改x的值
+    printValue(x);   // 使用左值引用读取x的值
+
+    modifyValue(10);  // 错误！无法将右值绑定到左值引用
+    printValue(10);   // 正确！可以将右值绑定到常量左值引用
+
+    return 0;
+}

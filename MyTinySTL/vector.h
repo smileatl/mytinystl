@@ -170,7 +170,7 @@ public:
     reference operator[](size_type n) {
         // 在size内访问就没错
         MYSTL_DEBUG(n < size());
-        return *(begin_ + n);
+        return *(begin_ + n); 
     }
     const_reference operator[](size_type n) const {
         MYSTL_DEBUG(n < size());

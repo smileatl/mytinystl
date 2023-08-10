@@ -16,7 +16,7 @@ namespace mystl{
 template <class T, T v>
 struct m_integral_constant
 {
-    static constexpr T value=v;
+    static constexpr T value=v; /*! 静态常数值 */
 };
 
 // 这是一个 C++ 中的模板定义，它定义了一个模板别名 `m_bool_constant`，用于创建一个布尔类型的模板常量。
@@ -26,7 +26,9 @@ struct m_integral_constant
 template <bool b>
 using m_bool_constant=m_integral_constant<bool, b>;
 
+/*! true */
 typedef m_bool_constant<true> m_true_type;
+/*! false */
 typedef m_bool_constant<false> m_false_type;
 
 /* *************************************** */
@@ -35,6 +37,7 @@ typedef m_bool_constant<false> m_false_type;
 // is_pair
 
 // --- forward declaration begin
+/* pair的前置声明 */
 // 这段代码是一个 C++ 的模板元编程中的类型特征（type traits）实现，用于判断一个类型是否为 `pair`。
 // 其中，`pair` 是一个模板类，有两个模板参数 `T1` 和 `T2`，表示一个键值对。
 // 这里的代码只是一个前向声明，没有给出 `pair` 类的具体实现。

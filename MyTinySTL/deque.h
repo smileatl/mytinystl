@@ -109,6 +109,7 @@ struct deque_iterator : public iterator<random_access_iterator_tag, T> {
     reference operator*() const { return *cur; }
     pointer operator->() const { return cur; }
 
+    // 距离：map间的距离 + buf间的距离
     difference_type operator-(const self& x) const {
         return static_cast<difference_type>(buffer_size) * (node - x.node) +
                (cur - first) - (x.cur - x.first);

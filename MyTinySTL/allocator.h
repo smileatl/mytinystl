@@ -13,25 +13,30 @@ namespace mystl {
 template <class T>
 class allocator {
 public:
-    typedef T value_type;
-    typedef T* pointer;
-    typedef const T* const_pointer;
-    typedef T& reference;
-    typedef const T& const_reference;
-    typedef size_t size_type;
-    typedef ptrdiff_t difference_type;
+    typedef T value_type;              /*! 数据类型 */
+    typedef T* pointer;                /*! 数据类型指针 */
+    typedef const T* const_pointer;    /*! const数据类型指针 */
+    typedef T& reference;              /*! 数据类型引用 */
+    typedef const T& const_reference;  /*! const数据类型引用 */
+    typedef size_t size_type;          /*! 数据类型大小 */
+    typedef ptrdiff_t difference_type; /*! 数据类型指针距离 */
 
 public:
+
+    // 分配内存
     static T* allocate();
     static T* allocate(size_type);
 
+    // 回收内存
     static void deallocate(T* ptr);
     static void deallocate(T* ptr, size_type n);
 
+    // 构造对象
     static void construct(T* ptr);
     static void construct(T* prt, const T& value);
     static void construct(T* ptr, T&& value);
 
+    // 析构对象
     template <class... Args>
     static void construct(T* ptr, Args&&... args);
 
@@ -62,14 +67,7 @@ T* allocator<T>::allocate(size_type n) {
     return static_cast<T*>(::operator new(n * sizeof(T)));
 }
 
-// 这是一个 C++ 中的模板函数，它属于 `allocator` 类的成员函数。
-// 这个函数的作用是释放一块内存，它接受两个参数：一个是指向要释放的内存块的指针，另一个是内存块的大小。
 
-// 在函数的实现中，首先判断要释放的指针是否为 `nullptr`，如果是则直接返回，
-// 否则调用全局的 `operator delete` 函数释放内存。
-// 这个函数是 C++ 中的一个内置函数，用于释放由 `operator new` 分配的内存。
-// 在这个函数中，我们没有使用第二个参数 `size`，因为在 C++ 中，`delete`
-// 操作符会自动获取要释放内存块的大小。
 template <class T>
 void allocator<T>::deallocate(T* ptr) {
     if (ptr == nullptr) {
@@ -78,6 +76,14 @@ void allocator<T>::deallocate(T* ptr) {
     ::operator delete(ptr);
 }
 
+// 这是一个 C++ 中的模板函数，它属于 `allocator` 类的成员函数。
+// 这个函数的作用是释放一块内存，它接受两个参数：一个是指向要释放的内存块的指针，另一个是内存块的大小。
+
+// 在函数的实现中，首先判断要释放的指针是否为 `nullptr`，如果是则直接返回，
+// 否则调用全局的 `operator delete` 函数释放内存。
+// 这个函数是 C++ 中的一个内置函数，用于释放由 `operator new` 分配的内存。
+// 在这个函数中，我们没有使用第二个参数 `size`，因为在 C++ 中，`delete`
+// 操作符会自动获取要释放内存块的大小。
 template <class T>
 void allocator<T>::deallocate(T* ptr, size_type /*size*/) {
     if (ptr == nullptr)

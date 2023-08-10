@@ -380,13 +380,21 @@ OutputIter unchecked_fill_n(OutputIter first, Size n, const T& value) {
 }
 
 // 为 one-byte 类型提供特化版本
+// 这段代码的作用是在满足特定条件的情况下，使用 std::memset 函数来高效地填充内存区域。特定的条件限定了模板参数的类型，以确保函数只能用于填充特定类型和大小的内存区域。
 template <class Tp, class Size, class Up>
+// Tp 是整数类型（std::is_integral<Tp>::value）。
+// Tp 的大小为 1 字节（sizeof(Tp) == 1）。
+// Tp 不是 bool 类型（!std::is_same<Tp, bool>::value）。
+// Up 是整数类型（std::is_integral<Up>::value）。
+// Up 的大小为 1 字节（sizeof(Up) == 1）。
+// 如果以上条件都满足，那么 std::enable_if 的 type 成员将被定义为 Tp*，否则，该特化将被禁用。
 typename std::enable_if<std::is_integral<Tp>::value && sizeof(Tp) == 1 &&
                             !std::is_same<Tp, bool>::value &&
                             std::is_integral<Up>::value && sizeof(Up) == 1,
                         Tp*>::type
 unchecked_fill_n(Tp* first, Size n, Up value) {
     if (n > 0) {
+        // 向first里填充n个value
         std::memset(first, (unsigned char)value, (size_t)(n));
     }
     return first + n;

@@ -1,7 +1,7 @@
 #ifndef MYTINYSTL_FUNCTIONAL_H_
 #define MYTINYSTL_FUNCTIONAL_H_
 
-// 这个头文件包含了mystl函数对象和哈希安徽念书
+// 这个头文件包含了mystl函数对象和哈希函数
 #include <cstddef>
 
 namespace mystl {
@@ -9,7 +9,7 @@ namespace mystl {
 // 定义一元函数的参数型别和返回值型别
 template <class Arg, class Result>
 struct unarg_function {
-    typedef Arg argument_type;
+    typedef Arg argument_type; // 参数类型别名
     typedef Result result_type;
 };
 
